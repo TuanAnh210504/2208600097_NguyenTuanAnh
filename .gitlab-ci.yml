@@ -1,14 +1,33 @@
-stages:
-  - deploy
+name: Deploy GitHub Pages
 
-pages:
-  stage: deploy
-  script:
-    - echo "Deploying to GitLab Pages..."
-    - echo "Pipeline executed at: $(date)"
-  artifacts:
-    paths:
-      - public
-    expire_in: 1 day
-  rules:
-    - if: $CI_COMMIT_BRANCH == $CI_DEFAULT_BRANCH
+on:
+  push:
+    branches: ["deploy"] # Tự động chạy khi anh push lên nhánh deploy
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+jobs:
+  deploy:
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+      
+      - name: Setup Pages
+        uses: actions/configure-pages@v4
+        
+      - name: Upload artifact
+        uses: actions/upload-pages-artifact@v3
+        with:
+          # Anh trỏ đến thư mục chứa các file HTML của anh
+          path: 'BaiTap7/public' 
+          
+      - name: Deploy to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v4
