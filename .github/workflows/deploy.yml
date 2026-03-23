@@ -11,9 +11,6 @@ permissions:
 
 jobs:
   deploy:
-    environment:
-      name: github-pages
-      url: ${{ steps.deployment.outputs.page_url }}
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
@@ -25,8 +22,7 @@ jobs:
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
         with:
-          # Vì thư mục public nằm ngay ngoài cùng nên chỉ cần ghi thế này:
-          path: './public' 
+           path: './public' 
           
       - name: Deploy to GitHub Pages
         id: deployment
