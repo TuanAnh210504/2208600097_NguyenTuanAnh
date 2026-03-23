@@ -2,7 +2,7 @@ name: Deploy GitHub Pages
 
 on:
   push:
-    branches: ["deploy"] # Tự động chạy khi anh push lên nhánh deploy
+    branches: ["deploy"]
 
 permissions:
   contents: read
@@ -25,8 +25,8 @@ jobs:
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
         with:
-          # Anh trỏ đến thư mục chứa các file HTML của anh
-          path: 'BaiTap7/public' 
+          # Vì thư mục public nằm ngay ngoài cùng nên chỉ cần ghi thế này:
+          path: './public' 
           
       - name: Deploy to GitHub Pages
         id: deployment
